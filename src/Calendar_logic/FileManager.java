@@ -1,3 +1,7 @@
+package Calendar_logic;
+
+import Calendar_utils.Appointment;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -6,43 +10,43 @@ import java.nio.file.Paths;
 
 public class FileManager{
 
-    Kalender kalender;
+    Calendar calendar;
     String path;
     String bufferSubPath;
     String bookmarkSubPath;
     String dateSubPath;
-    Termin[] currProcesses = new Termin[10];
+    Appointment[] currProcesses = new Appointment[10];
     int processingIndex = 0;
-    Termin currProcess = null;
+    Appointment currProcess = null;
 
     public static void main(String[] args){
-        Kalender k = new Kalender();
+        Calendar k = new Calendar();
         FileManager fm = k.fm;
         k.createAppointment(2025, 7, 0, "test");
         String path = fm.getRelativPathForCurrentProcess(k.tempStorage[0]);
         System.out.println(fm.checkIfPathExists(fm.dateSubPath + path));
     }
 
-    public FileManager(Kalender pKalender) {
-        System.out.println("FileManager started:");
-        kalender = pKalender;
+    public FileManager(Calendar pKalender) {
+        System.out.println("Calendar_Application.FileManager started:");
+        calendar = pKalender;
         path = pKalender.absPath;
-        bufferSubPath = path + kalender.BufferSubPath;
-        bookmarkSubPath = path + kalender.BookmarkSubPath;
-        dateSubPath = path + kalender.dateSubPath;
+        bufferSubPath = path + calendar.BufferSubPath;
+        bookmarkSubPath = path + calendar.BookmarkSubPath;
+        dateSubPath = path + calendar.dateSubPath;
 
     }
 
-    public int addProcess(Termin pTermin) {
+    public int addProcess(Appointment pAppointment) {
         if(currProcesses[processingIndex] == null) {
-            currProcesses[processingIndex] = pTermin;
+            currProcesses[processingIndex] = pAppointment;
             return processingIndex;
         }
         int i = 0;
         do {
             i++;
             if (((currProcesses.length - 1) >= processingIndex + i )&&(currProcesses[processingIndex+i] == null)) {
-                currProcesses[processingIndex + i] = pTermin;
+                currProcesses[processingIndex + i] = pAppointment;
                 return (processingIndex + i);
             }
         }while(i!=currProcesses.length-1);
@@ -50,14 +54,14 @@ public class FileManager{
     }
 
     public void initializeYearSubDirectory(int month){
-        int currYear = kalender.currYear;
-        String path = dateSubPath + month +"_"+kalender.correspondingMonths[month];
+        int currYear = calendar.currYear;
+        String path = dateSubPath + month +"_"+ calendar.correspondingMonths[month];
         createSubDir(path,""+currYear);
     }
 
     public void initializeSubDirectories(){
         int counter = 0;
-        for(String calenderMonth : kalender.correspondingMonths){
+        for(String calenderMonth : calendar.correspondingMonths){
             int task = createSubDir(dateSubPath, counter+"_"+calenderMonth);
             if(task == -1){
                 System.out.println("Es gab ein Problem bei: " + calenderMonth);
@@ -83,11 +87,11 @@ public class FileManager{
         return 0;
     }
 
-    public String getRelativPathForCurrentProcess(Termin pAppointment){
-        Termin appointment = pAppointment;
+    public String getRelativPathForCurrentProcess(Appointment pAppointment){
+        Appointment appointment = pAppointment;
         int month = appointment.getDate()[1];
         int year = appointment.getDate()[0];
-        String path = month + "_" + kalender.correspondingMonths[month] + "/" + year + "/";
+        String path = month + "_" + calendar.correspondingMonths[month] + "/" + year + "/";
         return path;
     }
 
@@ -96,11 +100,11 @@ public class FileManager{
     }
 
 
-    public Path convertAppointmentToFile(Termin pAppointment){
+    public Path convertAppointmentToFile(Appointment pAppointment){
         return null;
     }
 
-    public Termin convertFileToAppointment(File pFile){
+    public Appointment convertFileToAppointment(File pFile){
         return null;
     }
 }

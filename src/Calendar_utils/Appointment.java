@@ -1,19 +1,20 @@
+package Calendar_utils;
 
-public class Termin {
+public class Appointment {
 
 
-    private Datum date;
+    private Date date;
     private String name;
     private boolean bookmark = false;
     private boolean changed = false;
-    private Datum[] archive = new Datum[16];
+    private Date[] archive = new Date[16];
 
-    public Termin(String pName){
+    public Appointment(String pName){
         name = pName;
         bookmark = true;
     }
 
-    public Termin(int pYear, int pMonth, int pDay, String pName){
+    public Appointment(int pYear, int pMonth, int pDay, String pName){
         name = pName;
         changed = true;
         changeTime(pYear, pMonth, pDay);
@@ -36,7 +37,7 @@ public class Termin {
             }
         }
 
-        date = new Datum(pYear, pMonth, pDay);
+        date = new Date(pYear, pMonth, pDay);
 
     }
 
@@ -49,7 +50,7 @@ public class Termin {
     }
 
     public static void main(String[] args){
-        Termin t = new Termin(2000,1,1,"first");
+        Appointment t = new Appointment(2000,1,1,"first");
 
         System.out.println((t.archive[0]== null));
         t.changeTime(2000,1,2);

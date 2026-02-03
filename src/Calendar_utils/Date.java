@@ -1,25 +1,27 @@
-public class Datum {
+package Calendar_utils;
+
+public class Date{
 
     public int year;
     public int month;
     public int day;
     public int[] data;
-    public Datum between;
+    public Date between = null;
 
-    public Datum(int pYear, int pMonth, int pDay) {
+    public Date(int pYear, int pMonth, int pDay) {
         year = pYear; month = pMonth; day = pDay;
         int[] temp =  {year, month, day};
         data = temp;
     }
 
-    public Datum() {}
+    public Date() {}
 
-    public void setBetween(Datum Datum) {
-        between = Datum;
+    public void setBetween(Date pDate) {
+        between = pDate;
     }
 
-    public void getBetween(){
-
+    public Date getBetween(){
+        return between;
     }
 
     public int[] getData() {
