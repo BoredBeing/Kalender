@@ -1,4 +1,4 @@
-package utils;
+package Calendar_deadlines.utils;
 
 public class Date {
     private int day;

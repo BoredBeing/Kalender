@@ -1,11 +1,19 @@
-package creators;
-import utils.Time;
+package Calendar_deadlines.creators;
+import Calendar_deadlines.utils.Time;
 
 public class TimeObjectCreator {
     private int hour = -1;
     private int minute = -1;
     private int second = -1;
+    private Time last = null;
+
     public TimeObjectCreator(){}
+
+    public void resetValues(){
+        hour = -1;
+        minute = -1;
+        second = -1;
+    }
 
     public void setAll(int pHour, int pMinute, int pSecond){
         hour = checkHour(pHour);
@@ -65,9 +73,14 @@ public class TimeObjectCreator {
         return result;
     }
 
+    public Time getLast(){
+        return last;
+    }
+
     public Time createTime(){
         if(hasValues()){
-            return createObject();
+            last = createObject();
+            return last;
         }
         else{
             return null;

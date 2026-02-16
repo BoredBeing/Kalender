@@ -1,14 +1,21 @@
-package creators;
-import utils.Date;
-import utils.Deadline;
-import utils.Time;
+package Calendar_deadlines.creators;
+import Calendar_deadlines.utils.Date;
+import Calendar_deadlines.utils.Deadline;
+import Calendar_deadlines.utils.Time;
 
 public class DeadlineObjectCreator {
     private String name = "";
     private Date date = null;
     private Time time = null;
+    private Deadline last = null;
 
     public DeadlineObjectCreator(){}
+
+    public void resetValues(){
+        name = "";
+        date = null;
+        time = null;
+    }
 
     public void setAll(String pName, Date pDate, Time pTime){
         name = pName;
@@ -37,7 +44,8 @@ public class DeadlineObjectCreator {
 
     public Deadline createDeadline(){
         if(hasValues()==true){
-            return createObject();
+            last = createObject();
+            return last;
         }
         else{
             return null;
@@ -47,6 +55,10 @@ public class DeadlineObjectCreator {
     private Deadline createObject(){
         Deadline deadline = new Deadline(name,date,time);
         return deadline;
+    }
+
+    public Deadline getLast(){
+        return last;
     }
 
 }

@@ -1,11 +1,18 @@
-package creators;
-import utils.Date;
+package Calendar_deadlines.creators;
+import Calendar_deadlines.utils.Date;
 
 public class DateObjectCreator {
     private int day = -1;
     private int month = -1;
     private int year = -1;
+    private Date last = null;
     public DateObjectCreator(){}
+
+    public void resetValues(){
+        day = -1;
+        month = -1;
+        year = -1;
+    }
 
     public void setAll(int pDay, int pMonth, int pYear){
         day = pDay;
@@ -32,9 +39,14 @@ public class DateObjectCreator {
         return false;
     }
 
+    public Date getLast(){
+        return last;
+    }
+
     public Date createDate(){
         if(hasValues()){
-            return createObject();
+            last = createObject();
+            return last;
         }
         else {
             return null;
