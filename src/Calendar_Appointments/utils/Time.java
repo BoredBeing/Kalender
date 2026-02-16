@@ -1,4 +1,4 @@
-package Calendar_deadlines.utils;
+package Calendar_Appointments.utils;
 
 public class Time {
     private int hour;
@@ -15,13 +15,24 @@ public class Time {
         return hour;
     }
 
+    public void setHour(int pHour){
+        hour = pHour;
+    }
+
     public int getMinute(){
         return minute;
+    }
+
+    public void setMinute(int pMin){
+        minute = pMin;
     }
 
     public int getSecond(){
         return second;
     }
 
+    public void setSecond(int pSec) {
+        second = pSec;
+    }
 
 }

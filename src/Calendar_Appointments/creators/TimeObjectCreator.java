@@ -1,5 +1,5 @@
-package Calendar_deadlines.creators;
-import Calendar_deadlines.utils.Time;
+package Calendar_Appointments.creators;
+import Calendar_Appointments.utils.Time;
 
 public class TimeObjectCreator {
     private int hour = -1;

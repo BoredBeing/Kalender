@@ -1,5 +1,5 @@
-package Calendar_deadlines.creators;
-import Calendar_deadlines.utils.Date;
+package Calendar_Appointments.creators;
+import Calendar_Appointments.utils.Date;
 
 public class DateObjectCreator {
     private int day = -1;
@@ -53,7 +53,7 @@ public class DateObjectCreator {
         }
     }
 
-    public Date createObject(){
+    private Date createObject(){
         Date date = new Date(day,month,year);
         return date;
     }

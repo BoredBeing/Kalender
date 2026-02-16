@@ -1,4 +1,4 @@
-package Calendar_deadlines.utils;
+package Calendar_Appointments.utils;
 
 public class Deadline {
     private Date date;

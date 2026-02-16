@@ -1,6 +1,8 @@
 package Calendar_logic;
 
-import Calendar_utils.Appointment;
+import Calendar_Appointments.creators.*;
+import Calendar_Appointments.utils.*;
+
 
 public class Calendar {
 
@@ -14,9 +16,11 @@ public class Calendar {
     int currMonth = -1;
     int currYear = 2025;
     int[] daysOfMonths;
-    Appointment[] tempStorage = new Appointment[10];
     String[] correspondingMonths = {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","October","November","December"};
     String[] weekDays = {"Mo","Di","Mi","Do","Fr","Sa","So"};
+
+    private DateObjectCreator dateCreator = new DateObjectCreator();
+    private Date selected = null;
     FileManager fm;
 
     public Calendar() {
@@ -30,10 +34,32 @@ public class Calendar {
     }
     public static void main(String[] args) {
         Calendar k = new Calendar();
-        FileManager fm = k.fm;
-        k.displayCalenderMonth(0);
+        k.nextMonth();
 
+    }
 
+    public Date selectDate(int pDay){
+        if(hasDayInCurrMonth(pDay)) {
+            dateCreator.setAll(pDay, currMonth, currYear);
+            selected = dateCreator.createDate();
+            return selected;
+        }
+        return null;
+    }
+
+    public boolean hasDayInCurrMonth(int pDay){
+        if(pDay <= getDaysInCurrMonth()){
+            return true;
+        }
+        return false;
+    }
+
+    public int getDaysInCurrMonth(){
+        if(currMonth <= -1 || currMonth > 11){
+            System.out.println("Calendar not correctly initialized");
+            return -1;
+        }
+        return daysOfMonths[currMonth];
     }
 
     public void refreshYear() {
@@ -54,6 +80,8 @@ public class Calendar {
         displayCalenderMonth(currMonth);
     }
 
+
+
     public void nextMonth() {
         if(currMonth == -1){
             System.out.println("Current Year: "+currYear);
@@ -71,16 +99,6 @@ public class Calendar {
         displayCalenderMonth(currMonth);
     }
 
-    public void createAppointment(int year, int month, int day, String name) {
-        Appointment appointment;
-        appointment = new Appointment(year,month,day,name);
-        for(int i = 0;i<tempStorage.length;i++){
-            if(tempStorage[i] == null){
-                tempStorage[i] = appointment;
-                break;
-            }
-        }
-    }
 
     public void displayCalenderMonth(int month) {
         if (month < 0 || month > 11) {
@@ -121,14 +139,6 @@ public class Calendar {
 
     }
 
-    public boolean hasAppointment(int day) {
-        for(int appointmentDay: testdata){
-            if(day == appointmentDay){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static boolean isLeapYear(int year) {
         if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0) return true;
