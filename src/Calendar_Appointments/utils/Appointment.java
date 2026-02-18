@@ -46,6 +46,10 @@ public class Appointment {
         time = pTime;
     }
 
+    public void setName(String pName){
+        name = pName;
+    }
+
     public void setBookmark(boolean pBool){
         bookmark = pBool;
     }

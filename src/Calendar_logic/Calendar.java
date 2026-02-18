@@ -1,6 +1,6 @@
 package Calendar_logic;
 
-import Calendar_Appointments.creators.*;
+import Calendar_Appointments.creators.DateObjectCreator;
 import Calendar_Appointments.utils.*;
 
 
@@ -12,13 +12,14 @@ public class Calendar {
     String dateSubPath = "Dates/";
     String[] menuActions = {"select","list","date","next"};
     String[] selectActions = {"year","month","week","day"};
-    int[] testdata = {2,4,5,9,12,19,24,30};
     int currMonth = -1;
     int currYear = 2025;
     int[] daysOfMonths;
     String[] correspondingMonths = {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","October","November","December"};
     String[] weekDays = {"Mo","Di","Mi","Do","Fr","Sa","So"};
 
+    private DeadlineHandler deadlineHandler = new DeadlineHandler();
+    private AppointmentHandler appointmentHandler = new AppointmentHandler();
     private DateObjectCreator dateCreator = new DateObjectCreator();
     private Date selected = null;
     FileManager fm;
@@ -32,6 +33,7 @@ public class Calendar {
         fm = new FileManager(this);
         currYear = year;
     }
+
     public static void main(String[] args) {
         Calendar k = new Calendar();
         k.nextMonth();
