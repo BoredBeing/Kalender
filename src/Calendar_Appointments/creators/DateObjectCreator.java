@@ -14,6 +14,17 @@ public class DateObjectCreator {
         year = -1;
     }
 
+    public Date[] createMonth(int pDays , int pMonth , int pYear){
+        month = pMonth;year = pYear;
+        Date[] currMonth = new Date[pDays];
+        for(int dayofMonth = 1; dayofMonth <= pDays; dayofMonth++){
+            day = dayofMonth;
+            Date curr = createObject();
+            currMonth[dayofMonth-1] = curr;
+        }
+        return currMonth;
+    }
+
     public void setAll(int pDay, int pMonth, int pYear){
         day = pDay;
         month = pMonth;

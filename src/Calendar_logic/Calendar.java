@@ -13,7 +13,7 @@ public class Calendar {
     String[] menuActions = {"select","list","date","next"};
     String[] selectActions = {"year","month","week","day"};
     int currMonth = -1;
-    int currYear = 2025;
+    int currYear = 2026;
     int[] daysOfMonths;
     String[] correspondingMonths = {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","October","November","December"};
     String[] weekDays = {"Mo","Di","Mi","Do","Fr","Sa","So"};
@@ -21,32 +21,39 @@ public class Calendar {
     private DeadlineHandler deadlineHandler = new DeadlineHandler();
     private AppointmentHandler appointmentHandler = new AppointmentHandler();
     private DateObjectCreator dateCreator = new DateObjectCreator();
+    private Date[] currentMonthArray = null;
     private Date selected = null;
     FileManager fm;
 
     public Calendar() {
-        fm = new FileManager(this);
         refreshYear();
     }
 
     public Calendar(int year){
-        fm = new FileManager(this);
         currYear = year;
     }
+
+
 
     public static void main(String[] args) {
         Calendar k = new Calendar();
         k.nextMonth();
+        Date[] dates = k.getCurrMonth();
 
     }
 
-    public Date selectDate(int pDay){
+    public Date selectDateInCurrentMonth(int pDay){
         if(hasDayInCurrMonth(pDay)) {
-            dateCreator.setAll(pDay, currMonth, currYear);
+
             selected = dateCreator.createDate();
             return selected;
         }
         return null;
+    }
+
+    public Date[] getCurrMonth(){
+        Date[] currentMonth = dateCreator.createMonth(daysOfMonths[currMonth],currMonth,currYear);
+        return currentMonth;
     }
 
     public boolean hasDayInCurrMonth(int pDay){
@@ -79,6 +86,7 @@ public class Calendar {
             refreshYear();
             System.out.println("Current Year: " + currYear);
         }
+        currentMonthArray = getCurrMonth();
         displayCalenderMonth(currMonth);
     }
 
@@ -97,7 +105,7 @@ public class Calendar {
             refreshYear();
             System.out.println("Current Year: " + currYear);
         }
-
+        currentMonthArray = getCurrMonth();
         displayCalenderMonth(currMonth);
     }
 
@@ -107,33 +115,31 @@ public class Calendar {
             return;
         }
 
-        int daysToDisplay = daysOfMonths[month];
+        Date[] cMonth = currentMonthArray;
+        int daysToDisplay = cMonth.length;
         int weeks = (int)daysToDisplay / 7;
         int over = daysToDisplay % 7;
-
+        int dateCounter = 0;
         System.out.println(correspondingMonths[month]+":");
         //System.out.println("Es gibt " + weeks + " wochen und " + over + "tage über");
         System.out.println();
 
         for(int i = 0;i<=weeks;i++) {
-            int date;
-            String hasAppointment;
+            Date date;
             if(i == weeks){
                 for(int j = 1;j<=over;j++) {
-                    date = i*7+j;
-                    //hasAppointment = hasAppointment(date) ? "A" : "";
-                    hasAppointment = "";
-                    System.out.print(date+"\t"+hasAppointment+"|");
+                    date = cMonth[dateCounter];
+                    System.out.print(date.displayDate()+"\t"+"|");
+                    dateCounter++;
                 }
                 System.out.println();
             }
             else
             {
                 for(int j = 1;j<=7;j++) {
-                    date = i*7+j;
-                    //hasAppointment = hasAppointment(date) ? "A" : "";
-                    hasAppointment = "";
-                    System.out.print(date+"\t"+hasAppointment+"|");
+                    date = cMonth[dateCounter];
+                    System.out.print(date.displayDate()+"\t"+"|");
+                    dateCounter++;
                 }
                 System.out.println();
             }

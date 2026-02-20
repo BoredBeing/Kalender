@@ -34,4 +34,15 @@ public class Date {
     public void setYear(int pYear) {
         year = pYear;
     }
+
+    //testing
+    public String toString(){
+        return "Date: " + day + " " + month + " " + year;
+    }
+
+    public String displayDate(){
+        return day+"";
+    }
+
+
 }
