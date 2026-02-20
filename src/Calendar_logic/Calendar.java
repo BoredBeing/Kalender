@@ -6,12 +6,6 @@ import Calendar_Appointments.utils.*;
 
 public class Calendar {
 
-    String absPath = "/home/Tobi/Boring_Projects/java/Calender";
-    String BufferSubPath = "Buffer/";
-    String BookmarkSubPath = "Bookmark/";
-    String dateSubPath = "Dates/";
-    String[] menuActions = {"select","list","date","next"};
-    String[] selectActions = {"year","month","week","day"};
     int currMonth = -1;
     int currYear = 2026;
     int[] daysOfMonths;
@@ -25,12 +19,15 @@ public class Calendar {
     private Date selected = null;
     FileManager fm;
 
+
+
     public Calendar() {
         refreshYear();
     }
 
     public Calendar(int year){
         currYear = year;
+        refreshYear();
     }
 
 
@@ -45,7 +42,7 @@ public class Calendar {
     public Date selectDateInCurrentMonth(int pDay){
         if(hasDayInCurrMonth(pDay)) {
 
-            selected = dateCreator.createDate();
+            selected = currentMonthArray[pDay];;
             return selected;
         }
         return null;
@@ -129,7 +126,7 @@ public class Calendar {
             if(i == weeks){
                 for(int j = 1;j<=over;j++) {
                     date = cMonth[dateCounter];
-                    System.out.print(date.displayDate()+"\t"+"|");
+                    System.out.print(date.displayDay()+"\t"+"|");
                     dateCounter++;
                 }
                 System.out.println();
@@ -138,7 +135,7 @@ public class Calendar {
             {
                 for(int j = 1;j<=7;j++) {
                     date = cMonth[dateCounter];
-                    System.out.print(date.displayDate()+"\t"+"|");
+                    System.out.print(date.displayDay()+"\t"+"|");
                     dateCounter++;
                 }
                 System.out.println();
@@ -151,10 +148,6 @@ public class Calendar {
     public static boolean isLeapYear(int year) {
         if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0) return true;
         return false;
-    }
-
-    public void menuAction(){
-
     }
 
 }

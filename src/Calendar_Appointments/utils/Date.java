@@ -40,7 +40,7 @@ public class Date {
         return "Date: " + day + " " + month + " " + year;
     }
 
-    public String displayDate(){
+    public String displayDay(){
         return day+"";
     }
 
