@@ -17,26 +17,19 @@ public class Calendar {
     private DateObjectCreator dateCreator = new DateObjectCreator();
     private Date[] currentMonthArray = null;
     private Date selected = null;
-    FileManager fm;
-
-
 
     public Calendar() {
-        refreshYear();
+        setDaysOfMonthForCurrentYear();
     }
 
     public Calendar(int year){
         currYear = year;
-        refreshYear();
+        setDaysOfMonthForCurrentYear();
     }
-
-
 
     public static void main(String[] args) {
         Calendar k = new Calendar();
         k.nextMonth();
-        Date[] dates = k.getCurrMonth();
-
     }
 
     public Date selectDateInCurrentMonth(int pDay){
@@ -68,7 +61,7 @@ public class Calendar {
         return daysOfMonths[currMonth];
     }
 
-    public void refreshYear() {
+    public void setDaysOfMonthForCurrentYear(){
         int[] temp =  {31, isLeapYear(currYear)? 29:28 , 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         daysOfMonths = temp;
     }
@@ -80,14 +73,12 @@ public class Calendar {
         else {
             currMonth = 11;
             currYear--;
-            refreshYear();
+            setDaysOfMonthForCurrentYear();
             System.out.println("Current Year: " + currYear);
         }
         currentMonthArray = getCurrMonth();
         displayCalenderMonth(currMonth);
     }
-
-
 
     public void nextMonth() {
         if(currMonth == -1){
@@ -99,13 +90,12 @@ public class Calendar {
         else{
             currMonth = 0;
             currYear++;
-            refreshYear();
+            setDaysOfMonthForCurrentYear();
             System.out.println("Current Year: " + currYear);
         }
         currentMonthArray = getCurrMonth();
         displayCalenderMonth(currMonth);
     }
-
 
     public void displayCalenderMonth(int month) {
         if (month < 0 || month > 11) {
@@ -144,10 +134,13 @@ public class Calendar {
 
     }
 
-
     public static boolean isLeapYear(int year) {
         if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0) return true;
         return false;
+    }
+
+    public Date[] getCurrentMonthArray(){
+        return currentMonthArray;
     }
 
 }

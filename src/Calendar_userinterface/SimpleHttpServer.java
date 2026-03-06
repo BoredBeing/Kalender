@@ -7,67 +7,89 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
 
-public class SimpleHTTPServer {
+public class SimpleHttpServer {
 
     public static void main(String[] args) throws Exception {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
-        // Webseite
-        server.createContext("/", new FileHandler("web/index.html"));
-
-        // CSS
-        server.createContext("/style.css", new FileHandler("web/style.css"));
-
-        // JavaScript
-        server.createContext("/script.js", new FileHandler("web/script.js"));
-
-        // API Endpoint für Button
+        server.createContext("/", new StaticHandler());
         server.createContext("/api/button", new ButtonHandler());
 
         server.setExecutor(null);
         server.start();
 
-        System.out.println("Server läuft: http://localhost:8080");
+        System.out.println("Server läuft auf http://localhost:8080");
     }
 
-    // ===== Dateien ausliefern =====
-    static class FileHandler implements HttpHandler {
-        private final String filePath;
-
-        public FileHandler(String filePath) {
-            this.filePath = filePath;
-        }
+    // ===============================
+    // Static File Handler
+    // ===============================
+    static class StaticHandler implements HttpHandler {
 
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            File file = new File(filePath);
 
-            byte[] bytes = Files.readAllBytes(file.toPath());
+            String path = exchange.getRequestURI().getPath();
+            System.out.println("Request: " + path);
 
-            exchange.sendResponseHeaders(200, bytes.length);
+            if (path.equals("/")) {
+                path = "/index.html";
+            }
+
+
+            File file = new File("home/Tobi/Boring_Projects/java/Calendar/Calendar_userinterface/web/index.html");
+
+            if (!file.exists()) {
+                String notFound = "404 Not Found";
+                exchange.sendResponseHeaders(404, notFound.length());
+                exchange.getResponseBody().write(notFound.getBytes());
+                exchange.close();
+                return;
+            }
+
+            String contentType = getContentType(path);
+            exchange.getResponseHeaders().add("Content-Type", contentType);
+
+            byte[] data = Files.readAllBytes(file.toPath());
+            exchange.sendResponseHeaders(200, data.length);
+
             OutputStream os = exchange.getResponseBody();
-            os.write(bytes);
+            os.write(data);
             os.close();
         }
+
+        private String getContentType(String path) {
+            if (path.endsWith(".html")) return "text/html";
+            if (path.endsWith(".css")) return "text/css";
+            if (path.endsWith(".js")) return "application/javascript";
+            return "text/plain";
+        }
     }
 
-    // ===== Button Logik =====
+    // ===============================
+    // Button API
+    // ===============================
     static class ButtonHandler implements HttpHandler {
+
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+
+            System.out.println("API Call: " + exchange.getRequestMethod());
 
             if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
                 exchange.sendResponseHeaders(405, -1);
                 return;
             }
 
-            System.out.println("Button wurde gedrückt!");
+            // 👉 HIER deine Logik
+            System.out.println("Button gedrückt!");
 
-            // 👉 HIER deine Java-Logik
-            String response = "Java hat den Button verarbeitet!";
+            String response = "Java hat reagiert 👍";
 
-            exchange.sendResponseHeaders(200, response.length());
+            exchange.getResponseHeaders().add("Content-Type", "text/plain");
+            exchange.sendResponseHeaders(200, response.getBytes().length);
+
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
             os.close();

@@ -12,6 +12,16 @@ public class AppointmentHandler {
 
     }
 
+    public void createAppointmentFromDate(Date pDate){
+        appointmentCreator.setDate(pDate);
+    }
+
+    public Appointment createFullAppointment(String pName, Date pDate, Time pTime){
+        appointmentCreator.setAll(pDate, pTime, pName);
+        currentAppointment = appointmentCreator.createAppointment();
+        appointmentCreator.resetValues();
+        return currentAppointment;
+    }
 
     public void setCurrentAppointment(Appointment pAppointment){
         currentAppointment = pAppointment;

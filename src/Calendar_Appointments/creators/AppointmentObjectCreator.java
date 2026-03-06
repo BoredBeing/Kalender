@@ -13,6 +13,13 @@ public class AppointmentObjectCreator {
 
     }
 
+    public void resetValues(){
+        date = null;
+        time = null;
+        name = "";
+
+    }
+
     public boolean hasValues(){
         if(date != null && time != null && !name.isEmpty()){
             return true;
