@@ -57,6 +57,7 @@ public class DateObjectCreator {
     public Date createDate(){
         if(hasValues()){
             last = createObject();
+            resetValues();
             return last;
         }
         else {

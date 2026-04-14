@@ -23,6 +23,10 @@ public class FileManager{
     }
 
 
+    public void saveData(String[] data){
+        System.out.println(data.toString());
+    }
+
     public File[] loadDataFrom(int pYear, String pMonth) {
         File test = getFileFromYearAndMonth(pYear,pMonth);
         System.out.println(test.getAbsolutePath());
@@ -46,6 +50,8 @@ public class FileManager{
         File test = new File(path);
         return test;
     }
+
+
 
     public File initializeYearSubDirectory(int pYear){
         return createSubDir(dataHomePath.getName() + "/","Data_" + pYear);

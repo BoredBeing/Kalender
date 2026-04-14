@@ -22,6 +22,11 @@ public class Appointment {
         name = pName;
     }
 
+    public String[] getData(){
+        String[] temp = {name,date.toString(),time.toString()};
+        return temp;
+    }
+
     public Date[] getArchive(){
         return archive;
     }
@@ -66,6 +71,10 @@ public class Appointment {
         }
 
         date = pDate;
+    }
+
+    public String toString() {
+        return "Appointment: " + name + "";
     }
 
 }

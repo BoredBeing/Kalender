@@ -32,6 +32,7 @@ public class Calendar {
         k.nextMonth();
     }
 
+
     public Date selectDateInCurrentMonth(int pDay){
         if(hasDayInCurrMonth(pDay)) {
 
@@ -66,7 +67,7 @@ public class Calendar {
         daysOfMonths = temp;
     }
 
-    public void previousMonth() {
+    public Date[] previousMonth() {
         if(currMonth > 0){
             currMonth--;
         }
@@ -78,9 +79,15 @@ public class Calendar {
         }
         currentMonthArray = getCurrMonth();
         displayCalenderMonth(currMonth);
+        return currentMonthArray;
     }
 
-    public void nextMonth() {
+    public Date[] getMonth(int pMonth) {
+        currMonth = pMonth;
+        return getCurrMonth();
+    }
+
+    public Date[] nextMonth() {
         if(currMonth == -1){
             System.out.println("Current Year: "+currYear);
         }
@@ -95,6 +102,7 @@ public class Calendar {
         }
         currentMonthArray = getCurrMonth();
         displayCalenderMonth(currMonth);
+        return currentMonthArray;
     }
 
     public void displayCalenderMonth(int month) {

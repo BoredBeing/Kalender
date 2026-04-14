@@ -3,12 +3,10 @@ package Calendar_Appointments.utils;
 public class Time {
     private int hour;
     private int minute;
-    private int second;
 
-    public Time(int pHour,int pMinute, int pSecond){
+    public Time(int pHour,int pMinute){
         hour = pHour;
         minute = pMinute;
-        second = pSecond;
     }
 
     public int getHour(){
@@ -27,12 +25,8 @@ public class Time {
         minute = pMin;
     }
 
-    public int getSecond(){
-        return second;
-    }
-
-    public void setSecond(int pSec) {
-        second = pSec;
+    public String toString(){
+        return "Time: " + hour + ":" + minute + ":";
     }
 
 }

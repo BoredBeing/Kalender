@@ -4,7 +4,6 @@ import Calendar_Appointments.utils.Time;
 public class TimeObjectCreator {
     private int hour = -1;
     private int minute = -1;
-    private int second = -1;
     private Time last = null;
 
     public TimeObjectCreator(){}
@@ -12,13 +11,28 @@ public class TimeObjectCreator {
     public void resetValues(){
         hour = -1;
         minute = -1;
-        second = -1;
     }
+
+    public void addHours(int hours) {
+        hour += hours;
+    }
+
+    public void subtractHours(int hours){
+        hour -= hours;
+    }
+
+    public void addMinutes(int minutes){
+        minute *= minutes;
+    }
+
+    public void subtractMinutes(int minutes) {
+        minute -= minutes;
+    }
+
 
     public void setAll(int pHour, int pMinute, int pSecond){
         hour = checkHour(pHour);
         minute = checkMinute(pMinute);
-        second = checkSecond(pSecond);
     }
 
     public void setHour(int pHour){
@@ -29,9 +43,6 @@ public class TimeObjectCreator {
         minute = checkMinute(pMinute);
     }
 
-    public void setSecond(int pSecond){
-        second = checkSecond(pSecond);
-    }
 
     public int checkHour(int pHour){
         if(pHour >= 0 && pHour < 24){
@@ -47,12 +58,9 @@ public class TimeObjectCreator {
         return -1;
     }
 
-    public int checkSecond(int pSec){
-        return checkMinute(pSec);
-    }
 
     public boolean hasValues(){
-        if(hour != -1 && minute != -1 && second != -1){
+        if(hour != -1 && minute != -1){
             return true;
         }
         return false;
@@ -66,16 +74,21 @@ public class TimeObjectCreator {
         if(minute == -1){
             result += "minute ";
         }
-        if(second == -1){
-            result += "second";
-        }
-
         return result;
     }
 
     public Time getLast(){
         return last;
     }
+
+    public int getHour(){
+        return hour;
+    }
+
+    public int getMinute(){
+        return minute;
+    }
+
 
     public Time createTime(){
         if(hasValues()){
@@ -88,7 +101,7 @@ public class TimeObjectCreator {
     }
 
     private Time createObject(){
-        Time time = new Time(hour,minute,second);
+        Time time = new Time(hour,minute);
         return time;
     }
 

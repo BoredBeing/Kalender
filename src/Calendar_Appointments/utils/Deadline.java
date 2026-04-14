@@ -25,6 +25,11 @@ public class Deadline {
         return time;
     }
 
+    public String[] getData() {
+        String[] temp = {name,date.toString(),time.toString()};
+        return temp;
+    }
+
     public void setName(String pName){
         name = pName;
     }

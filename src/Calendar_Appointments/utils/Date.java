@@ -35,7 +35,7 @@ public class Date {
         year = pYear;
     }
 
-    //testing
+    //dataFormating for FileManager
     public String toString(){
         return "Date: " + day + " " + month + " " + year;
     }
